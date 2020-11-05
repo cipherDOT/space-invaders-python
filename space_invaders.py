@@ -25,13 +25,39 @@ BG = pygame.transform.scale2x(pygame.image.load(
 LASER = pygame.image.load(os.path.join('assets', 'pixel_laser_yellow.png'))
 
 shipx = 150
-shipy = 500
+shipy = 600
 player_vel = 5
 enemy_vel = 3
+space_vel = 2
 total_enemies = 5
 frame_rate = 30
 
 GAME_FONT = pygame.font.SysFont("comicsans", 50)
+
+# ------------------------------------------------------------------------------------------------------------------------- #
+
+
+class Space:
+    height = BG.get_height()
+    img = BG
+
+    def __init__(self):
+        self.y1 = 0
+        self.y2 = -self.height
+
+    def move(self):
+        self.y1 += space_vel
+        self.y2 += space_vel
+
+        if self.y1 == self.height:
+            self.y1 = self.y2 - self.height
+
+        if self.y2 == self.height:
+            self.y2 = self.y1 - self.height
+
+    def draw(self, win):
+        win.blit(self.img, (0, self.y1))
+        win.blit(self.img, (0, self.y2))
 
 # ------------------------------------------------------------------------------------------------------------------------- #
 
@@ -96,6 +122,7 @@ def main():
     run = True
     global shipx, shipy, total_enemies
     ship = Ship(shipx, shipy)
+    space = Space()
     score = 0
     enemies = []
     lasers = []
@@ -105,7 +132,8 @@ def main():
 
     while run:
         clock.tick(frame_rate)
-        display.blit(BG, (0, 0))
+        space.move()
+        space.draw(display)
         keys = pygame.key.get_pressed()
 
         for event in pygame.event.get():
@@ -199,4 +227,5 @@ if __name__ == '__main__':
     main()
 
 # ------------------------------------------------------------------------------------------------------------------------- #
+
 
