@@ -99,7 +99,8 @@ def main():
     score = 0
     enemies = []
     lasers = []
-    # lives = 5
+    lives = 5
+    counter = 0
     clock = pygame.time.Clock()
 
     while run:
@@ -110,7 +111,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-                pygame.quit()
+                # pygame.quit()
 
             if keys[pygame.K_SPACE]:
                 lasers.append(Laser(ship.x, ship.y))
@@ -131,6 +132,16 @@ def main():
 
         elif (keys[pygame.K_RIGHT] and ship.x + PLAYER_SHIP.get_width() < WIDTH):
             ship.move_right()
+
+        if lives == 0:
+            lost_text = GAME_FONT.render('You Lost!', 3, (255, 255, 255))
+            display.blit(lost_text, ((WIDTH // 2) -
+                                     (lost_text.get_width() // 2), 50))
+            counter += 1
+
+        if counter == 30:
+            time.sleep(2)
+            run = False
 
         # ----------------------------------------------------------------------- #
         # collision logic:
@@ -160,15 +171,16 @@ def main():
             enemy.draw(display)
             if enemy.y > HEIGHT:
                 enemies.remove(enemy)
-                score -= 1
+                lives -= 1
                 continue
 
         # ----------------------------------------------------------------------- #
 
-        # lives_text = GAME_FONT.render("Lives: " + str(lives), 1, (255, 255, 255))
+        lives_text = GAME_FONT.render(
+            "Lives: " + str(lives), 1, (255, 255, 255))
         score_text = GAME_FONT.render(
             "Score: " + str(score), 1, (255, 255, 255))
-        # display.blit(lives_text, (10, 10))
+        display.blit(lives_text, (10, 10))
         display.blit(score_text, (WIDTH - 10 - score_text.get_width(), 10))
         ship.draw(display)
         pygame.display.flip()
@@ -187,3 +199,4 @@ if __name__ == '__main__':
     main()
 
 # ------------------------------------------------------------------------------------------------------------------------- #
+
