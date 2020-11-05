@@ -1,0 +1,5 @@
+modules used: pygame, random, os, time
+
+pip install pygame
+
+pygame is a 2D graphics module used to make games in python. I used that module and some other to make a Sapce Invaders game.
