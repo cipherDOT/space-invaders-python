@@ -188,7 +188,7 @@ def main():
     # for debugging purposes
     print(len(lasers))
     print(len(enemies))
-    # print(lives)
+    print(lives)
 
 # ------------------------------------------------------------------------------------------------------------------------- #
 
