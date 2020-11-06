@@ -214,9 +214,10 @@ def main():
         pygame.display.flip()
 
     # for debugging purposes
-    print(len(lasers))
-    print(len(enemies))
-    print(lives)
+    print('Lasers: ' + str(len(lasers)))
+    print('Enemies: ' + str(len(enemies)))
+    print('Lives: ' + str(lives))
+    print('Wave Number: ' + str(total_enemies))
 
 # ------------------------------------------------------------------------------------------------------------------------- #
 
