@@ -6,7 +6,7 @@ import pygame
 import random
 import time
 import os
-# import sys
+import sys
 
 # ------------------------------------------------------------------------------------------------------------------------- #
 
@@ -30,7 +30,9 @@ player_vel = 5
 enemy_vel = 3
 space_vel = 2
 total_enemies = 5
-frame_rate = 30
+frame_rate = 60
+
+lasers = []
 
 GAME_FONT = pygame.font.SysFont("comicsans", 50)
 
@@ -89,6 +91,9 @@ class Ship(object):
     def move_right(self):
         self.x += player_vel
 
+    def shoot(self):
+        lasers.append(Laser(self.x, self.y))
+
     def draw(self, win):
         win.blit(PLAYER_SHIP, (self.x, self.y))
 
@@ -125,7 +130,6 @@ def main():
     space = Space()
     score = 0
     enemies = []
-    lasers = []
     lives = 5
     counter = 0
     clock = pygame.time.Clock()
@@ -142,7 +146,7 @@ def main():
                 # pygame.quit()
 
             if keys[pygame.K_SPACE]:
-                lasers.append(Laser(ship.x, ship.y))
+                ship.shoot()
 
         # ----------------------------------------------------------------------- #
         # checks for the total enemies and increments score and makes a new wave
@@ -181,11 +185,6 @@ def main():
                     enemies.remove(enemy)
                     lasers.remove(laser)
                     break
-
-        # for enemy in enemies:
-        #     if collide(enemy, ship):
-        #         lives -= 1
-        #         continue
 
         for laser in lasers:
             laser.move()
@@ -228,5 +227,3 @@ if __name__ == '__main__':
     main()
 
 # ------------------------------------------------------------------------------------------------------------------------- #
-
-
